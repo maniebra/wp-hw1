@@ -43,6 +43,7 @@ binding.imagePicker.addEventListener("click", () => {
 });
 
 document.addEventListener("change", (event) => {
+  binding = bind();
   if (event.target.matches("input")) {
     const calculationsContainer = document.querySelector("#calculations");
     if (!calculationsContainer) return;

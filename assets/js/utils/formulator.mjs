@@ -19,14 +19,12 @@ export default function evaluateFormulas(formulaElement, binding) {
       }
       value = binding[elementID].value;
     }
-    console.log(value);
     evaluatedFormula = evaluatedFormula.replace(
       elementID,
       value
     );
   });
 
-  console.log("Evaluated formula:", evaluatedFormula);
 
   try {
     return eval(evaluatedFormula);
