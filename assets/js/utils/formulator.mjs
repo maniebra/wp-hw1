@@ -1,3 +1,5 @@
+import { normalizeText } from "./text-normalizer.mjs";
+
 export default function evaluateFormulas(formulaElement, binding) {
   const formula = formulaElement.getAttribute("evaluator");
   const formulaParts = formula.split(/[-+*/()%]/).filter(Boolean);
@@ -7,7 +9,7 @@ export default function evaluateFormulas(formulaElement, binding) {
     var elementID = part.trim();
     var value = 0;
     if (part.match(/^[0-9.]+$/)) {
-      value = parseFloat(part);
+      value = parseFloat(normalizeText(part));
     } else {
       if (
         binding[elementID] === undefined ||
