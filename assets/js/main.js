@@ -11,6 +11,17 @@ binding.changeImage.addEventListener("click", () => {
   binding.imagePicker.click();
 });
 
+binding.resetForm.addEventListener("click", () => {
+  document.querySelectorAll("input").forEach((input) => {
+    input.value = "";
+  });
+  document.querySelectorAll("textarea").forEach((textarea) => {
+    textarea.value = "";
+  });
+  document.querySelector(".detail-form .image").style.backgroundImage = "";
+  document.querySelector("#calculations").innerHTML = "";
+});
+
 binding.imagePicker.addEventListener("click", () => {
   const file = event.target.files[0];
   if (file) {
@@ -32,14 +43,24 @@ document.addEventListener("change", (event) => {
     const calculationsContainer = document.querySelector("#calculations");
     if (!calculationsContainer) return;
 
-    calculationsContainer.innerHTML = ""; // Clear previous results
+    calculationsContainer.innerHTML = "";
 
     document.querySelectorAll("formula").forEach((formulaElement) => {
       const result = evaluateFormulas(formulaElement, binding);
       if (result !== undefined && result !== null) {
-        const resultElement = document.createElement("div");
-        resultElement.textContent = `${formulaElement.dataset.label}: ${result}`;
-        calculationsContainer.appendChild(resultElement);
+        const row = document.createElement("tr");
+
+        const labelCell = document.createElement("td");
+        labelCell.textContent = formulaElement.dataset.label;
+
+        const resultCell = document.createElement("td");
+        resultCell.textContent = Math.round(result * 1000) / 1000;
+        resultCell.style.direction = "ltr";
+
+        row.appendChild(labelCell);
+        row.appendChild(resultCell);
+
+        calculationsContainer.appendChild(row);
       }
     });
   }

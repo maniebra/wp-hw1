@@ -10,32 +10,40 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
-    <div class="content-card glass-element">
-      <h1 class="top-title">افزودن کالا</h1>
-      <div class="detail-form">
-        <div class="image">
-			<button id="change-image">تغییر تصویر</button>
-			<input id="image-picker" type="file" />
-			<input type="text" id="name" placeholder="نام کالا" />
+    <main>
+      <div class="content-card glass-element">
+        <h1 class="top-title">افزودن کالا</h1>
+        <div class="detail-form">
+          <div class="image">
+            <button id="change-image">تغییر تصویر</button>
+            <input id="image-picker" type="file" />
+            <input type="text" id="name" placeholder="نام کالا" />
+          </div>
+          <textarea placeholder="توضیحات" id="description"></textarea>
+          <input type="text" id="fee" placeholder="قیمت واحد" />
+          <input type="text" id="count" placeholder="تعداد" />
+          <input type="text" id="discount" placeholder="تخفیف" />
+          <formula evaluator="count*fee-discount" data-label="قیمت خام" />
+          <formula evaluator="count*fee*0.09" data-label="مالیات" />
         </div>
-		<textarea placeholder="توضیحات" id="description"></textarea>
-		<input type="text" id="fee" placeholder="قیمت واحد" />
-        <input type="text" id="count" placeholder="تعداد" />
-        <input type="text" id="discount" placeholder="تخفیف" />
-		<formula evaluator="count*fee-discount" data-label="قیمت خام"/>
-		<formula evaluator="count*fee*0.09" data-label="مالیات"/>
+        <div class="formulas">
+          <h2>محاسبات نهایی:</h2>
+          <table dir="rtl">
+            <thead>
+              <tr>
+                <th>عنوان</th>
+                <th>مقدار</th>
+              </tr>
+            </thead>
+            <tbody id="calculations"></tbody>
+          </table>
+        </div>
+        <div class="form-finalizers">
+          <button id="submit-item">ثبت</button>
+          <button id="reset-form">پاک کردن</button>
+        </div>
       </div>
-	  <div class="formulas">
-		<h2>محاسبات نهایی:</h2>
-		<div id="calculations" dir="ltr">
-			<p>لطفاً فرم را تکمیل کنید.</p>
-		</div>
-	  </div>
-      <div class="form-finalizers">
-        <button id="submit-item">ثبت</button>
-        <button id="reset-form">پاک کردن</button>
-      </div>
-    </div>
+    </main>
 
     <footer>
       <div class="footer-content">

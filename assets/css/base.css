@@ -4,6 +4,8 @@ body {
   background-color: var(--bg-color);
   font-family: var(--primary-font);
   direction: rtl;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,11 +15,12 @@ body {
   }
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   text-align: center;
   color: var(--fg-color);
 }
-
 
 .glass-element {
   background-color: color-mix(in srgb, var(--bg-color) 10%, transparent);
@@ -29,6 +32,10 @@ h1, h2, h3 {
     background-color: color-mix(in srgb, black 20%, transparent);
     box-shadow: 0 var(--sm) var(--lg) 0 rgba(0, 0, 0, 0.1);
   }
+}
+
+main {
+  flex: 1;
 }
 
 button {
@@ -49,7 +56,8 @@ button:hover {
   filter: brightness(125%);
 }
 
-textarea, input {
+textarea,
+input {
   padding: var(--sm);
   font-size: var(--md);
   font-family: var(--primary-font);
@@ -67,28 +75,13 @@ input::placeholder {
   transition: all 0.3s ease-in-out;
 }
 
-input::after {
-  content: "عدد";
-  position: absolute;
-  width: auto;
-  z-index: 100;
-}
-
 input:focus {
   border-color: var(--accent-color);
   box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
 }
 
-input:focus::placeholder,
-input:not(:placeholder-shown)::placeholder {
-  transform: translateY(-12rem);
-  opacity: 1;
-}
 
 footer {
-  position: fixed;
-  bottom: 0;
-  background-color: var(--bg-color);
   color: var(--fg-color);
   margin: 0;
   padding: 0 2rem;
@@ -97,11 +90,69 @@ footer {
 
 @media (prefers-color-scheme: dark) {
   footer {
-    background-color: color-mix(in srgb, var(--bg-color), black);
     color: var(--fg-color);
   }
 }
 
 special {
   color: var(--accent-color);
+}
+
+table {
+  border-radius: 12px;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  margin-top: 20px;
+  text-align: right;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: right;
+}
+
+th {
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+tr {
+  background-color: var(--bg-color);
+}
+
+tbody tr:nth-child(even) {
+  filter: brightness(125%);
+}
+
+tbody tr:hover {
+  filter: brightness(150%);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.calculation-result {
+  font-weight: bold;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  table {
+    font-size: 14px;
+  }
+
+  th,
+  td {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  th,
+  td {
+    padding: 6px;
+  }
 }
