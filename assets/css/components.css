@@ -63,6 +63,11 @@
   margin: 0 auto;
 }
 
+#calculations {
+  padding-top: var(--md);
+  text-align: center;
+}
+
 #reset-form {
   background-color: transparent;
   color: var(--accent-color);
@@ -82,4 +87,8 @@
   font-size: 0.75rem;
   border: 0;
   padding: var(--sm);
+}
+
+#image-picker {
+  display: none;
 }

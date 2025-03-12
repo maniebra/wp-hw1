@@ -15,17 +15,21 @@
       <div class="detail-form">
         <div class="image">
 			<button id="change-image">تغییر تصویر</button>
+			<input id="image-picker" type="file" />
 			<input type="text" id="name" placeholder="نام کالا" />
         </div>
 		<textarea placeholder="توضیحات" id="description"></textarea>
 		<input type="text" id="fee" placeholder="قیمت واحد" />
         <input type="text" id="count" placeholder="تعداد" />
         <input type="text" id="discount" placeholder="تخفیف" />
-		<formula evaluator="count*fee-discount" label="قیمت خام"/>
-		<formula evaluator="count*0.09" label="مالیات"/>
+		<formula evaluator="count*fee-discount" data-label="قیمت خام"/>
+		<formula evaluator="count*fee*0.09" data-label="مالیات"/>
       </div>
 	  <div class="formulas">
-		<h2>محاسبات:</h2>
+		<h2>محاسبات نهایی:</h2>
+		<div id="calculations" dir="ltr">
+			<p>لطفاً فرم را تکمیل کنید.</p>
+		</div>
 	  </div>
       <div class="form-finalizers">
         <button id="submit-item">ثبت</button>
