@@ -1,17 +1,7 @@
 import bind from "./utils/binder.mjs";
 import evaluateFormulas from "./utils/formulator.mjs";
 
-let binding = bind();
-
-binding.submitItem.addEventListener("click", () => {
-  alert("clicked");
-});
-
-binding.changeImage.addEventListener("click", () => {
-  binding.imagePicker.click();
-});
-
-binding.resetForm.addEventListener("click", () => {
+function resetForm() {
   document.querySelectorAll("input").forEach((input) => {
     input.value = "";
   });
@@ -20,7 +10,21 @@ binding.resetForm.addEventListener("click", () => {
   });
   document.querySelector(".detail-form .image").style.backgroundImage = "";
   document.querySelector("#calculations").innerHTML = "";
+}
+
+let binding = bind();
+
+document.onload = resetForm();
+
+binding.submitItem.addEventListener("click", () => {
+  alert("کالای شما ثبت شد!");
 });
+
+binding.changeImage.addEventListener("click", () => {
+  binding.imagePicker.click();
+});
+
+binding.resetForm.addEventListener("click", resetForm);
 
 binding.imagePicker.addEventListener("click", () => {
   const file = event.target.files[0];
