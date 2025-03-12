@@ -29,12 +29,14 @@ body {
 .content-card {
   height: 80vh;
   display: flex;
+  flex-direction: column;
   padding: var(--md);
   border-radius: var(--sm);
   margin: var(--xl);
-  justify-content: center;
+  align-content: center;
 }
 
 .top-title {
+  text-align: center;
   color: var(--fg-color);
 }
