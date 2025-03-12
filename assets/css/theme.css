@@ -1,15 +1,16 @@
 :root {
     /* [     COLORS     ]  */
-    --primary-color: #007bff;
-    --bg-light: #f8f9fa;
-    --bg-dark: #343a40;
-    --fg-light: #121212;
-    --fg-dark: #f8f9fa;
+    --main-accent: #00d5ff;
+    --accent-color: color-mix(in srgb, var(--main-accent) 90%, #222);
+    --bg-color: #f8f9fa;
+    --fg-color: #222222;
+    --form-bg: #e9ecef;
 
     /* [     FONTS     ]  */
     --primary-font: yekan;
 
     /* [     MEASURES     ]  */
+    --xxs: 0.13rem;
     --xs: 0.25rem;
     --sm: 0.5rem;
     --md: 1rem;
@@ -19,4 +20,14 @@
     --3xl: 4rem;
     --4xl: 5rem;
     --5xl: 6rem;
+    --6xl: 7rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --accent-color: color-mix(in srgb, var(--main-accent) 60%, black);
+        --fg-color: #fff;
+        --bg-color: #343a40;
+        --form-bg: #222427;
+    }
 }

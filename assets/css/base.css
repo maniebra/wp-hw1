@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  color: var(--accent-color);
+  background-color: var(--bg-color);
+  font-family: var(--primary-font);
+  direction: rtl;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: var(--fg-dark);
+    background-color: var(--bg-color);
+  }
+}
+
+h1, h2, h3 {
+  text-align: center;
+  color: var(--fg-color);
+}
+
+
+.glass-element {
+  background-color: color-mix(in srgb, var(--bg-color) 10%, transparent);
+  box-shadow: 0 var(--sm) var(--lg) 0 rgba(0, 0, 0, 0.33);
+}
+
+@media (prefers-color-scheme: dark) {
+  .glass-element {
+    background-color: color-mix(in srgb, black 20%, transparent);
+    box-shadow: 0 var(--sm) var(--lg) 0 rgba(0, 0, 0, 0.1);
+  }
+}
+
+button {
+  width: fit-content;
+  margin: var(--sm) auto;
+  padding: var(--sm) var(--lg);
+  border-radius: var(--sm);
+  color: var(--fg-color);
+  background-color: var(--accent-color);
+  border: thin solid var(--accent-color);
+  font-family: var(--primary-font);
+  font-size: var(--md);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  filter: brightness(125%);
+}
+
+textarea, input {
+  padding: var(--sm);
+  font-size: var(--md);
+  font-family: var(--primary-font);
+  border: 0;
+  border-radius: var(--sm);
+  color: var(--fg-color);
+  background-color: var(--form-bg);
+  transition: all 0.3s ease-in-out;
+  outline: none;
+  resize: none;
+}
+
+input::placeholder {
+  color: #aaa;
+  transition: all 0.3s ease-in-out;
+}
+
+input::after {
+  content: "عدد";
+  position: absolute;
+  width: auto;
+  z-index: 100;
+}
+
+input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+input:focus::placeholder,
+input:not(:placeholder-shown)::placeholder {
+  transform: translateY(-12rem);
+  opacity: 1;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  background-color: var(--bg-color);
+  color: var(--fg-color);
+  margin: 0;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  footer {
+    background-color: color-mix(in srgb, var(--bg-color), black);
+    color: var(--fg-color);
+  }
+}
+
+special {
+  color: var(--accent-color);
+}
