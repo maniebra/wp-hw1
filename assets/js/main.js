@@ -27,18 +27,20 @@ binding.imagePicker.addEventListener("click", () => {
   }
 });
 
-document.querySelectorAll("input[id]").forEach((input) => {
-  const formulaElement = document
-    .querySelectorAll("formula")
-    .forEach((formulaElement) => {
-      input.addEventListener("change", () => {
-        binding.calculations.innerHTML = "";
-        const result = evaluateFormulas(formulaElement, binding);
-        if (result) {
-          const resultElement = document.createElement("div");
-          resultElement.textContent = `${formulaElement.dataset.label} : ${result}`;
-          binding.calculations.appendChild(resultElement);
-        }
-      });
+document.addEventListener("change", (event) => {
+  if (event.target.matches("input")) {
+    const calculationsContainer = document.querySelector("#calculations");
+    if (!calculationsContainer) return;
+
+    calculationsContainer.innerHTML = ""; // Clear previous results
+
+    document.querySelectorAll("formula").forEach((formulaElement) => {
+      const result = evaluateFormulas(formulaElement, binding);
+      if (result !== undefined && result !== null) {
+        const resultElement = document.createElement("div");
+        resultElement.textContent = `${formulaElement.dataset.label}: ${result}`;
+        calculationsContainer.appendChild(resultElement);
+      }
     });
+  }
 });
