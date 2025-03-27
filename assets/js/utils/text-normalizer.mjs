@@ -1,12 +1,13 @@
 export function normalizeNumbers(persianText) {
-  var numbers = "۰۱۲۳۴۵۶۷۸۹";
+  persianText = String(persianText);
+  const numbers = "۰۱۲۳۴۵۶۷۸۹";
   return persianText.replace(/[۰-۹]/g, function (w) {
     return numbers.indexOf(w);
   });
 }
 
-
 export function normalizePersianCharacters(rawText) {
+  rawText = String(rawText);
   return rawText
     .replace(/ك/g, "ک")
     .replace(/ي/g, "ی")

@@ -43,56 +43,82 @@ binding.imagePicker.addEventListener("click", (event) => {
 });
 
 function updateCalculationsTable() {
-  if (document.activeElement && document.activeElement.closest("#calculations")) {
-    return;
-  }
-  
-  binding = bind();
-  const calculationsContainer = document.querySelector("#calculations");
-  if (!calculationsContainer) return;
-  
-  calculationsContainer.innerHTML = "";
-  
-  document.querySelectorAll("formula").forEach((formulaElement) => {
-    const result = evaluateFormulas(formulaElement, binding);
+  try {
+    // If an element inside the #calculations table is currently focused (i.e. being edited),
+    // then skip updating the table.
+    if (document.activeElement && document.activeElement.closest("#calculations")) {
+      return;
+    }
     
-    const row = document.createElement("tr");
+    // Refresh the binding.
+    binding = bind();
+    const calculationsContainer = document.querySelector("#calculations");
+    if (!calculationsContainer) return;
     
-    const labelCell = document.createElement("td");
-    labelCell.textContent = formulaElement.getAttribute("data-label") || "";
-    row.appendChild(labelCell);
+    // Clear out current table rows.
+    calculationsContainer.innerHTML = "";
     
-    const resultCell = document.createElement("td");
-    resultCell.textContent =
-      result !== null && result !== undefined ? Math.round(result * 1000) / 1000 : "Error";
-    resultCell.style.direction = "ltr";
-    row.appendChild(resultCell);
-    
-    const evaluatorCell = document.createElement("td");
-    evaluatorCell.contentEditable = true;
-    evaluatorCell.textContent = formulaElement.getAttribute("evaluator");
-    evaluatorCell.style.border = "1px solid #ccc";
-    evaluatorCell.style.padding = "5px";
-    evaluatorCell.style.minWidth = "100px";
-    
-    evaluatorCell.addEventListener("blur", () => {
-      formulaElement.setAttribute("evaluator", evaluatorCell.textContent);
-      const updatedResult = evaluateFormulas(formulaElement, binding);
+    // For each <formula> element, create a row in the table.
+    document.querySelectorAll("formula").forEach((formulaElement) => {
+      let result;
+      try {
+        result = evaluateFormulas(formulaElement, binding);
+      } catch (e) {
+        console.error("Error evaluating formula for", formulaElement, e);
+        result = null;
+      }
+      
+      const row = document.createElement("tr");
+      
+      // Column 1: Label from the data-label attribute.
+      const labelCell = document.createElement("td");
+      labelCell.textContent = formulaElement.getAttribute("data-label") || "";
+      row.appendChild(labelCell);
+      
+      // Column 2: Computed Result.
+      const resultCell = document.createElement("td");
       resultCell.textContent =
-        updatedResult !== null && updatedResult !== undefined
-          ? Math.round(updatedResult * 1000) / 1000
-          : "Error";
+        result !== null && result !== undefined ? Math.round(result * 1000) / 1000 : "Error";
+      resultCell.style.direction = "ltr";
+      row.appendChild(resultCell);
+      
+      // Column 3: Editable Evaluator.
+      const evaluatorCell = document.createElement("td");
+      evaluatorCell.contentEditable = true;
+      evaluatorCell.textContent = formulaElement.getAttribute("evaluator");
+      evaluatorCell.style.border = "1px solid #ccc";
+      evaluatorCell.style.padding = "5px";
+      evaluatorCell.style.minWidth = "100px";
+      
+      // When editing finishes, update the formula's evaluator attribute and recalc.
+      evaluatorCell.addEventListener("blur", () => {
+        try {
+          formulaElement.setAttribute("evaluator", evaluatorCell.textContent);
+          const updatedResult = evaluateFormulas(formulaElement, binding);
+          resultCell.textContent =
+            updatedResult !== null && updatedResult !== undefined
+              ? Math.round(updatedResult * 1000) / 1000
+              : "Error";
+        } catch (error) {
+          console.error("Error updating evaluator:", error);
+          resultCell.textContent = "Error";
+        }
+      });
+      
+      row.appendChild(evaluatorCell);
+      calculationsContainer.appendChild(row);
     });
-    
-    row.appendChild(evaluatorCell);
-    calculationsContainer.appendChild(row);
-  });
+  } catch (error) {
+    console.error("Error in updateCalculationsTable:", error);
+  }
 }
 
+// Update the table only when binding inputs change.
 Object.values(binding).forEach((el) => {
   if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
     el.addEventListener("input", updateCalculationsTable);
   }
 });
 
+// Populate the table on page load.
 window.addEventListener("load", updateCalculationsTable);
