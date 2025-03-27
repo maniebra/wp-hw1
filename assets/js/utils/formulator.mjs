@@ -1,35 +1,41 @@
 import { normalizeText } from "./text-normalizer.mjs";
 
 export default function evaluateFormulas(formulaElement, binding) {
-  const formula = formulaElement.getAttribute("evaluator");
+  let formula = formulaElement.getAttribute("evaluator");
+  if (!formula) return null;
+
   const formulaParts = formula.split(/[-+*/()%]/).filter(Boolean);
 
   let evaluatedFormula = formula;
-  formulaParts.forEach((part) => {
-    var elementID = part.trim();
-    var value = 0;
-    if (part.match(/^[0-9.]+$/)) {
-      value = parseFloat(normalizeText(part));
+  formulaParts.forEach(part => {
+    const elementID = part.trim();
+    let value;
+
+    if (elementID.match(/^[0-9۰-۹.]+$/)) {
+      value = parseFloat(normalizeText(elementID));
     } else {
-      if (
-        binding[elementID] === undefined ||
-        binding[elementID].value === undefined
-      ) {
-        return null;
+      if (!binding[elementID] || binding[elementID].value === undefined) {
+        value = 0;
+      } else {
+        value = parseFloat(binding[elementID].value);
+        if (isNaN(value)) {
+          value = 0;
+        }
       }
-      value = binding[elementID].value;
     }
-    evaluatedFormula = evaluatedFormula.replace(
-      elementID,
-      value
-    );
+    const regex = new RegExp('\\b' + elementID + '\\b', 'g');
+    evaluatedFormula = evaluatedFormula.replace(regex, value);
   });
 
+  evaluatedFormula = evaluatedFormula.replace(
+    /([A-Za-z0-9_.]+)\s*\*\*\s*([A-Za-z0-9_.]+)/g,
+    'Math.pow($1,$2)'
+  );
 
   try {
     return eval(evaluatedFormula);
   } catch (e) {
-    console.error("Error evaluating formula:", e);
+    console.error("Error evaluating formula:", e, "Evaluated formula:", evaluatedFormula);
     return null;
   }
 }

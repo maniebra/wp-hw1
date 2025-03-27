@@ -23,8 +23,9 @@
           <input type="text" id="fee" placeholder="قیمت واحد" />
           <input type="text" id="count" placeholder="تعداد" />
           <input type="text" id="discount" placeholder="تخفیف" />
-          <formula evaluator="count*fee-discount" data-label="قیمت خام" />
-          <formula evaluator="count*fee*0.09" data-label="مالیات" />
+          <formula evaluator="count*fee-discount" data-label="قیمت خام"/>
+          <formula evaluator="count*fee*0.09" data-label="مالیات"/>
+          <formula evaluator="fee*0.09" data-label="سود واحد"/>
         </div>
         <div class="formulas">
           <h2>محاسبات نهایی:</h2>
@@ -33,6 +34,7 @@
               <tr>
                 <th>عنوان</th>
                 <th>مقدار</th>
+                <th>فرمول</th>
               </tr>
             </thead>
             <tbody id="calculations"></tbody>
