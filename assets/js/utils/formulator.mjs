@@ -15,12 +15,11 @@ export default function evaluateFormulas(formulaElement, binding) {
       value = parseFloat(normalizeText(elementID));
     } else {
       if (!binding[elementID] || binding[elementID].value === undefined) {
+        throw new Error(`Field "${elementID}" not found in binding.`);
+      }
+      value = parseFloat(binding[elementID].value);
+      if (isNaN(value)) {
         value = 0;
-      } else {
-        value = parseFloat(binding[elementID].value);
-        if (isNaN(value)) {
-          value = 0;
-        }
       }
     }
     const regex = new RegExp('\\b' + elementID + '\\b', 'g');
