@@ -1,9 +1,11 @@
 export function normalizeNumbers(persianText) {
-  persianText = String(persianText);
+  let alteredText = String(persianText);
   const numbers = "۰۱۲۳۴۵۶۷۸۹";
-  return persianText.replace(/[۰-۹]/g, function (w) {
-    return numbers.indexOf(w);
-  });
+  for(let i = 0; i < 10; i++) {
+    alteredText = alteredText.replace(/numbers[i]/g, String(i));
+  }
+  console.log(alteredText)
+  return alteredText
 }
 
 export function normalizePersianCharacters(rawText) {

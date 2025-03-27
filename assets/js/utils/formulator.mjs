@@ -17,7 +17,7 @@ export default function evaluateFormulas(formulaElement, binding) {
       if (!binding[elementID] || binding[elementID].value === undefined) {
         throw new Error(`Field "${elementID}" not found in binding.`);
       }
-      value = parseFloat(binding[elementID].value);
+      value = parseFloat(normalizeText(binding[elementID].value));
       if (isNaN(value)) {
         value = 0;
       }
